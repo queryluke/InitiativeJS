@@ -24,13 +24,13 @@
             }
         });*/
         //Skills
-        //$http.get('https://sheetsu.com/apis/40b023c5').success(function(data) {
-            //vm.skills = data['result'];
-        //});
-        $http.get('../data/skills.json').success(function(data) {
+        $http.get('https://sheetsu.com/apis/40b023c5').success(function(data) {
+            vm.skills = data['result'];
+        });
+        /*$http.get('../data/skills.json').success(function(data) {
             vm.skills = data['result'];
             //$log.log(data['result']);
-        });
+        });*/
 
         vm.update = function(char,type){
             //vm.remove(char);
