@@ -1,0 +1,90 @@
+<div class="container">
+    <div>
+        <navbar />
+    </div>
+    <div class="row">
+        <div id="deck-container" class="col-xs-12">
+            <div class="row">
+                <div class="col-sm-3 col-md-offset-1">
+                    <button class="btn btn-primary btn-lg" id="deal-cards" ng-click="main.deal()">Deal</button>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <h4 id="dealt-card-output">{{ main.message }}</h4>
+                </div>
+                <div class="col-sm-4 col-md-3">
+                    <button class="btn btn-danger btn-lg pull-right" id="reshuffle" ng-click="main.reshuffle()">Reshuffle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row">
+                <div ng-repeat="(id,p) in main.players | orderBy: 'initiative' track by id" class="col-xs-12 col-sm-3">
+                    <div class="well well-sm" ng-class="{'shaken': p.shaken > 0, 'wound-1': p.wound >= 1, 'wound-2': p.wound >= 2, 'wound-3': p.wound == 3, 'joker':p.initiative < 3, 'turn-taken':p.turnTaken == 1}">
+                        <div class="row">
+                            <div class="col-xs-12" ng-click="main.open('lg',p)">
+                                <h4>{{p.name }}</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <ul class="list-unstyled list-inline">
+                                    <li ng-if="p.shaken != 1">&nbsp;</li>
+                                    <li ng-if="p.shaken == 1"><span class="glyphicon glyphicon-flash"></span><span class="glyphicon glyphicon-flash"></span><span class="glyphicon glyphicon-flash"></span></li>
+                                </ul>
+                            </div>
+                            <div class="col-xs-6 text-right" ng-if="p.initiative < 3">
+                                JOKER!!!
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-9">
+                                <h5>Wounds:</h5>
+                                    <button type="button" ng-click="main.wound(p,0)" ng-class="{active: p.wound == 0}" class="btn btn-primary btn-sm" data-toggle="button" aria-pressed="false" autocomplete="off">0</button>
+                                <div class="btn-group">
+                                    <button type="button" ng-click="main.wound(p,1)" ng-class="{active: p.wound >= 1}" class="btn btn-danger btn-sm" data-toggle="button" aria-pressed="false" autocomplete="off">
+                                        <span ng-if="p.wound < 1"> 1 </span>
+                                        <span ng-if="p.wound >= 1" class="glyphicon glyphicon-fire"></span>
+                                    </button>
+                                    <button type="button" ng-click="main.wound(p,2)" ng-class="{active: p.wound >= 2}" class="btn btn-danger btn-sm" data-toggle="button" aria-pressed="false" autocomplete="off">
+                                        <span ng-if="p.wound < 2"> 2 </span>
+                                        <span ng-if="p.wound >= 2" class="glyphicon glyphicon-fire"></span>
+                                    </button>
+                                    <button type="button" ng-click="main.wound(p,3)" ng-class="{active: p.wound == 3}"class="btn btn-danger btn-sm" data-toggle="button" aria-pressed="false" autocomplete="off">
+                                        <span ng-if="p.wound < 3"> 3 </span>
+                                        <span ng-if="p.wound == 3" class="glyphicon glyphicon-fire"></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <h5>&nbsp;</h5>
+                                <button type="button" ng-click="main.shake(p)" ng-class="{active: p.shaken == 1}" class="btn btn-warning btn-sm pull-right" data-toggle="button" aria-pressed="false" autocomplete="off">
+                                    <span class="glyphicon glyphicon-flash"></span> Shaken
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row-pad row">
+                            <div class="col-xs-6">
+                                <button type="button" class="btn btn-success btn-sm" ng-click="main.takeTurn(p)">End Turn</button>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <h4>
+                                    <div ng-show="p.quick == true">
+                                        <button type="button" class="btn btn-info btn-sm" data-ng-if="p.initiative > 34" ng-click="main.discard(p)">
+                                            <span class="glyphicon glyphicon-repeat"></span>
+                                        </button>
+                                        {{p.initiative}}
+                                    </div>
+                                    <div ng-hide="p.quick == true">
+                                        {{p.initiative}}
+                                    </div>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
