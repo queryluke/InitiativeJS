@@ -10,9 +10,11 @@
         //$cookies.remove('char');
         var vm = this;
         
-        vm.char = newChar();
-
         vm.params = $routeParams;
+        
+        vm.char = newChar(vm.params.type);
+
+        
         vm.characters = getCharacters();
 
         //Edges
@@ -38,7 +40,6 @@
             var character = angular.copy(char);
             var hasName = angular.isUndefined(character.name);
             if(hasName !== true){
-                character.type = vm.params.type;
                 if(index >= 0){
                     vm.characters[index] = character;
                 } else {
@@ -68,6 +69,7 @@
         };
 
         vm.edit = function(char){
+            //vm.char = angular.merge({},newChar(),char);
             vm.char = char;
             //vm.char = vm.characters[$index];
         }
@@ -75,10 +77,12 @@
         function setCharacters(){
             //$cookies.putObject('char',vm.characters);
             $localStorage.char = vm.characters;
-            vm.char = newChar();
+            vm.char = newChar(vm.params.type);
         }
+        
+        $log.log(vm.char);
 
-        function newChar(){
+        function newChar(type){
             var char = {
                 'edge':[],
                 'attributes': [
@@ -89,12 +93,19 @@
                     {'name':'vigor','value':'4'}
                 ],
                 'attributes2': [
-                    {'name':'Charisma','value':'0'},
-                    {'name':'Pace','value':'0'},
-                    {'name':'Parry','value':'0'},
-                    {'name':'Toughness','value':'0'}
+                    {'name':'charisma','value':'0'},
+                    {'name':'pace','value':'0'},
+                    {'name':'parry','value':'0'},
+                    {'name':'toughness','value':'0'},
+                    {'name':'armor','value':'0'},
                 ],
-                'skills': []
+                'skills': [],
+                'wound': 0,
+                'shaken': 0,
+                'turnTaken': 0,
+                'initiative': 0,
+                'holdAction': 0,
+                'type': type
             };
             return char;
         }

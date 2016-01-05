@@ -12,10 +12,15 @@
                 <div class="row">
                     <div class="form-group col-xs-8">
                         <label for="player-name">Name</label>
-                        <input type="text" class="form-control player-input" id="player-name" ng-model="add.char.name" value=""/>
+                        <input type="text" class="form-control player-input" id="player-name" ng-model="add.char.name" value="">
                     </div>
-                    <div class="col-xs-4 text-right">
+                    <div class="form-group col-xs-4 text-right">
                         <button class="btn btn-info" ng-click="add.update(add.char)" title="save"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group col-xs-4" ng-show="add.char.type == 'extras'">
+                        <label for="extraAmount">Amount</label>
+                        <input type="text" id="extraAmount" class="form-control" ng-model="add.char.amount" value="1">
                     </div>
                 </div>
                 <div class="row">
@@ -78,11 +83,6 @@
                         <h4>Notes</h4>
                         <textarea class="form-control" ng-model="add.char.notes"></textarea>
                     </div>
-                    <!--<ul>
-                        <li ng-repeat="edge in add.char.edge">{{ edge.name }} | <button ng-click="removeTrait('edge')">X</button></li>
-                    </ul>
-                    <select class="form-control" ng-model="charEdge" ng-options="edge.name for edge in edges" ng-change="change(charEdge,'edge',1)">
-                    </select>-->
                 </div>
             </div>
         </div>
